@@ -2,7 +2,9 @@ import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import LiveReviewSimulator from './components/LiveReviewSimulator';
+import ArchitecturePipeline from './components/ArchitecturePipeline';
 import WorkflowCards from './components/WorkflowCards';
+import RulesStudio from './components/RulesStudio';
 import CliSection from './components/CliSection';
 import ComparisonTable from './components/ComparisonTable';
 import PricingCalculator from './components/PricingCalculator';
@@ -16,7 +18,9 @@ export default function App() {
       <main className="flex-grow">
         <Hero />
         <LiveReviewSimulator />
+        <ArchitecturePipeline />
         <WorkflowCards />
+        <RulesStudio />
         <CliSection />
         <ComparisonTable />
         <PricingCalculator />

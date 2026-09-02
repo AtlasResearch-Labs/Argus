@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Terminal, ArrowUpRight, Menu, X, Check, GitPullRequest } from 'lucide-react';
+import { Terminal, ArrowUpRight, Menu, X, Check, GitPullRequest, Activity } from 'lucide-react';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function Header() {
           {/* Brand Logo with Official Argus Emblem */}
           <div className="flex items-center gap-3">
             <a href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-sm bg-[#0a0a0a] border border-[#222222] flex items-center justify-center p-1">
+              <div className="w-8 h-8 rounded-sm bg-[#0a0a0a] border border-[#262626] flex items-center justify-center p-1">
                 <img 
                   src="/branding/argus-dark.png" 
                   alt="Argus Emblem" 
@@ -30,13 +30,19 @@ export default function Header() {
                 ARGUS
               </span>
             </a>
+
+            <div className="hidden lg:flex items-center gap-2 pl-3 border-l border-[#222] font-mono text-[11px] text-neutral-500">
+              <span className="w-1.5 h-1.5 rounded-none bg-neutral-400" />
+              <span>SENTINEL: READY</span>
+            </div>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-7 font-mono text-xs text-neutral-400">
-            <a href="#overview" className="hover:text-white transition">Capabilities</a>
-            <a href="#simulator" className="hover:text-white transition">Interactive Review</a>
-            <a href="#cli" className="hover:text-white transition">CLI</a>
+            <a href="#simulator" className="hover:text-white transition">Live Simulator</a>
+            <a href="#pipeline" className="hover:text-white transition">Architecture</a>
+            <a href="#rules" className="hover:text-white transition">Rules Studio</a>
+            <a href="#cli" className="hover:text-white transition">Terminal CLI</a>
             <a href="#comparison" className="hover:text-white transition">Comparison</a>
             <a href="#pricing" className="hover:text-white transition">Pricing</a>
             <a href="https://powerbox.atlasresearchlabs.online/docs" target="_blank" rel="noopener noreferrer" className="hover:text-white transition inline-flex items-center gap-1">
@@ -85,9 +91,10 @@ export default function Header() {
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#050505] border-b border-[#1f1f1f] px-4 py-4 space-y-3 font-mono text-xs">
-          <a href="#overview" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">Capabilities</a>
-          <a href="#simulator" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">Interactive Review</a>
-          <a href="#cli" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">CLI</a>
+          <a href="#simulator" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">Live Simulator</a>
+          <a href="#pipeline" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">Architecture</a>
+          <a href="#rules" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">Rules Studio</a>
+          <a href="#cli" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">Terminal CLI</a>
           <a href="#comparison" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">Comparison</a>
           <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="block text-neutral-300 hover:text-white py-1">Pricing</a>
           <div className="pt-3 border-t border-[#1a1a1a] flex flex-col gap-2">

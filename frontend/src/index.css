@@ -24,14 +24,39 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #262626;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #404040;
 }
 
-/* Code block formatting */
-pre, code {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+/* Code block typography */
+pre, code, .font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Ambient glow utilities */
+.glow-mesh {
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.glow-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 100%);
+}
+
+.glow-border {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glow-border:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+/* Grid overlay */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
