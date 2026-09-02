@@ -3,35 +3,35 @@ import { ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-[#141414] py-16 font-mono text-xs text-neutral-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-black py-16 text-xs text-neutral-400 font-sans">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-[#141414]">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-[#171717]">
           
-          {/* Brand Col */}
-          <div className="md:col-span-1 space-y-4">
+          {/* Col 1: Brand */}
+          <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-sm bg-[#0a0a0a] border border-[#222222] flex items-center justify-center p-1">
+              <div className="w-7 h-7 rounded-sm bg-[#0d0d0d] border border-[#262626] flex items-center justify-center p-1">
                 <img 
                   src="/branding/argus-dark.png" 
                   alt="Argus Logo" 
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="font-bold text-white tracking-widest">ARGUS</span>
+              <span className="font-mono text-sm font-bold text-white tracking-wider">ARGUS</span>
             </div>
-            <p className="text-neutral-500 text-[11px] leading-relaxed font-sans">
-              Autonomous PR reviewer and code security sentinel. Part of the Atlas Labs sovereign software collective.
+            <p className="text-neutral-500 text-xs leading-relaxed">
+              Automated pull request code reviewer and security scanner.
             </p>
           </div>
 
-          {/* Systems */}
-          <div>
-            <div className="text-white font-bold uppercase tracking-wider mb-3">// Ecosystem</div>
-            <ul className="space-y-2 font-sans">
+          {/* Col 2: Ecosystem */}
+          <div className="space-y-3">
+            <div className="text-white font-mono font-bold text-xs uppercase tracking-wider">Ecosystem</div>
+            <ul className="space-y-2">
               <li>
                 <a href="https://atlasresearchlabs.online" className="hover:text-white transition inline-flex items-center gap-1">
-                  <span>Atlas Labs Portal</span>
+                  <span>Atlas Labs</span>
                   <ArrowUpRight className="w-3 h-3 text-neutral-500" />
                 </a>
               </li>
@@ -43,7 +43,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="https://github.com/AtlasResearch-Labs/Isthmus" className="hover:text-white transition inline-flex items-center gap-1">
-                  <span>Isthmus P2P Mesh</span>
+                  <span>Isthmus</span>
                   <ArrowUpRight className="w-3 h-3 text-neutral-500" />
                 </a>
               </li>
@@ -56,10 +56,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
-          <div>
-            <div className="text-white font-bold uppercase tracking-wider mb-3">// Resources</div>
-            <ul className="space-y-2 font-sans">
+          {/* Col 3: Resources */}
+          <div className="space-y-3">
+            <div className="text-white font-mono font-bold text-xs uppercase tracking-wider">Resources</div>
+            <ul className="space-y-2">
               <li>
                 <a href="https://github.com/AtlasResearch-Labs/Argus" className="hover:text-white transition inline-flex items-center gap-1">
                   <span>GitHub Repository</span>
@@ -68,7 +68,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="https://powerbox.atlasresearchlabs.online/docs" className="hover:text-white transition inline-flex items-center gap-1">
-                  <span>Inference API Docs</span>
+                  <span>Documentation</span>
                   <ArrowUpRight className="w-3 h-3 text-neutral-500" />
                 </a>
               </li>
@@ -81,21 +81,21 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Governance */}
-          <div>
-            <div className="text-white font-bold uppercase tracking-wider mb-3">// Legal & Policy</div>
-            <ul className="space-y-2 font-sans">
-              <li><a href="https://powerbox.atlasresearchlabs.online/privacy" className="hover:text-white transition">Zero-Retention Privacy</a></li>
+          {/* Col 4: Legal */}
+          <div className="space-y-3">
+            <div className="text-white font-mono font-bold text-xs uppercase tracking-wider">Policies</div>
+            <ul className="space-y-2">
+              <li><a href="https://powerbox.atlasresearchlabs.online/privacy" className="hover:text-white transition">Privacy Policy</a></li>
               <li><a href="https://powerbox.atlasresearchlabs.online/terms" className="hover:text-white transition">Terms of Service</a></li>
-              <li><span className="text-neutral-500">MIT Open Source License</span></li>
+              <li><span className="text-neutral-500">MIT License</span></li>
             </ul>
           </div>
 
         </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-neutral-500">
-          <div>© 2026 Atlas Labs. Sovereign Software Primitives.</div>
-          <div className="text-neutral-400">Sub-second Flash Inference · Zero Data Retention</div>
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-neutral-500 text-xs">
+          <div>© 2026 Atlas Research Labs.</div>
+          <div>Fast, private, zero-noise code reviews.</div>
         </div>
 
       </div>

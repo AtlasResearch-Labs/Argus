@@ -5,57 +5,47 @@ const CLI_EXAMPLES = [
   {
     id: 'review',
     cmd: 'argus review',
-    desc: 'Audit unstaged & staged changes locally before opening a pull request',
-    output: `ARGUS // AUTONOMOUS CODE SENTINEL
+    desc: 'Review staged and unstaged changes locally before opening a pull request',
+    output: `ARGUS CODE REVIEWER
 
-Inspecting git diff: [git diff HEAD]...
-Parsed 2 modified code file(s). Running Argus analysis...
+Checking git diff...
+2 modified files found.
 
---------------------------------------------------
-Verdict: [CHANGES_REQUESTED] (0.84s)
-Summary: Potential null dereference in verifyToken and unindexed query detected.
+src/auth/jwt.ts:24 [LOGIC]
+  Token payload accessed without null verification.
+  Suggestion: if (!token) return { valid: false };
 
-ACTIONABLE FINDINGS (2):
+src/db/queries.ts:89 [SECURITY]
+  Raw string concatenation in SQL query.
+  Suggestion: Use parameterized query binding.
 
-[HIGH] src/auth/jwt.ts:24 - Unhandled Token Null State
-  Explanation: Function accesses token.length without validating null input.
-  Suggested Fix:
-    if (!token) return { valid: false };
-
-[MEDIUM] src/db/queries.ts:89 - Non-Parameterized Query Parameter
-  Explanation: Pass parameters via array binding to prevent injection risks.
-
---------------------------------------------------`
+Review complete. 2 suggestions generated.`
   },
   {
     id: 'scan',
     cmd: 'argus scan',
-    desc: 'Static zero-latency secret and credential sentry',
-    output: `ARGUS // STATIC SECRET SENTRY
+    desc: 'Scan workspace for leaked API keys, tokens, and private credentials',
+    output: `ARGUS SECRET SCANNER
 
-Scanning 14 source files across workspace...
+Scanning repository files...
 
-SECURITY FINDINGS (1):
-  [CRITICAL] src/config/aws.ts:12 -> Leaked AWS Access Key ID
-  Line contains hardcoded AKIAIOSFODNN7EXAMPLE. Move key to .env.
-
-Warning: Please remove hardcoded credentials before creating a commit.`
+src/config/aws.ts:12 [LEAK]
+  Hardcoded AWS Access Key ID detected (AKIAIOSFODNN7EXAMPLE).
+  Please move this key to your .env file before committing.`
   },
   {
     id: 'test',
-    cmd: 'argus test src/math/calculator.ts',
-    desc: 'Synthesize comprehensive unit test suite for a specific file',
-    output: `ARGUS // TEST SYNTHESIZER
+    cmd: 'argus test src/math/calc.ts',
+    desc: 'Generate a unit test suite for a specific function or file',
+    output: `ARGUS TEST GENERATOR
 
-Parsing AST for src/math/calculator.ts...
-Synthesizing Jest test suite with 16 boundary cases...
+Analyzing src/math/calc.ts...
+Synthesized Jest test suite with 8 boundary cases.
 
-Generated: tests/math/calculator.test.ts (16 assertions)
-  - applies 20% discount for VIP users
-  - applies 10% discount for PRO users
-  - returns 0 if price is negative or zero
-  - handles null and undefined userRole safely
-  - validates floating-point decimal precision`
+Created tests/math/calc.test.ts:
+  - calculates standard percentage discount
+  - returns 0 on negative price input
+  - handles empty user roles safely`
   }
 ];
 
@@ -72,32 +62,32 @@ export default function CliSection() {
   };
 
   return (
-    <section id="cli" className="py-20 bg-[#020202] border-t border-[#141414]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="cli" className="py-24 bg-[#050505] border-b border-[#171717]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-12">
-          <div className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-2">
-            LOCAL TERMINAL WORKFLOW
+        <div className="max-w-3xl mb-12 space-y-3">
+          <div className="text-xs font-mono text-neutral-400 uppercase tracking-wider">
+            Terminal CLI
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Audit Code Directly in Your Terminal
+          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            Run reviews locally in your terminal.
           </h2>
-          <p className="text-neutral-400 text-xs sm:text-sm font-mono mt-2">
-            Run Argus locally before pushing commits to catch issues before CI triggers.
+          <p className="text-neutral-400 text-sm font-sans">
+            Catch issues before pushing code to GitHub with the standalone Argus CLI.
           </p>
         </div>
 
-        {/* Command Selector Tabs */}
-        <div className="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs">
+        {/* Selector Tabs */}
+        <div className="flex flex-wrap items-center gap-3 mb-6 font-mono text-xs">
           {CLI_EXAMPLES.map((ex) => (
             <button
               key={ex.id}
               onClick={() => setActiveTab(ex.id)}
               className={`px-4 py-2 rounded-sm transition border ${
                 activeTab === ex.id
-                  ? 'bg-[#141414] border-neutral-300 text-white font-bold'
-                  : 'bg-[#080808] border-[#1f1f1f] text-neutral-400 hover:text-white hover:border-[#333]'
+                  ? 'bg-white text-black font-semibold border-white'
+                  : 'bg-[#0a0a0a] border-[#222] text-neutral-400 hover:text-white hover:border-[#333]'
               }`}
             >
               $ {ex.cmd}
@@ -105,31 +95,23 @@ export default function CliSection() {
           ))}
         </div>
 
-        {/* Terminal Window */}
-        <div className="rounded-sm bg-[#000000] border border-[#1a1a1a] overflow-hidden shadow-2xl font-mono">
+        {/* Terminal Window Box */}
+        <div className="rounded-md bg-black border border-[#222] overflow-hidden shadow-2xl font-mono text-xs">
           
-          {/* Terminal Titlebar */}
-          <div className="px-4 py-3 bg-[#0a0a0a] border-b border-[#171717] flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-none bg-[#262626]" />
-              <span className="w-2.5 h-2.5 rounded-none bg-[#262626]" />
-              <span className="w-2.5 h-2.5 rounded-none bg-[#262626]" />
-              <span className="ml-2 text-xs text-neutral-400">terminal — argus cli</span>
-            </div>
-
+          <div className="px-5 py-3.5 bg-[#0f0f0f] border-b border-[#1c1c1c] flex items-center justify-between">
+            <span className="text-neutral-400">Terminal — Argus CLI</span>
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-[#141414] border border-[#222] hover:border-[#333] text-xs text-neutral-300 transition"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#3a3a3a] text-neutral-300 text-xs transition"
             >
-              {copied ? <Check className="w-3 h-3 text-white" /> : <Copy className="w-3 h-3 text-neutral-400" />}
-              <span>{copied ? 'Copied' : 'Copy command'}</span>
+              {copied ? <Check className="w-3.5 h-3.5 text-white" /> : <Copy className="w-3.5 h-3.5 text-neutral-400" />}
+              <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
 
-          {/* Terminal Body */}
-          <div className="p-5 sm:p-6 text-xs sm:text-[13px] leading-relaxed overflow-x-auto text-neutral-300">
-            <div className="text-neutral-500 mb-2"># {activeExample.desc}</div>
-            <div className="text-white font-bold mb-4">$ npx @atlas-labs/{activeExample.cmd}</div>
+          <div className="p-6 text-[13px] leading-relaxed overflow-x-auto text-neutral-300 space-y-3">
+            <div className="text-neutral-500"># {activeExample.desc}</div>
+            <div className="text-white font-bold">$ npx @atlas-labs/{activeExample.cmd}</div>
             <pre className="text-neutral-300 whitespace-pre">{activeExample.output}</pre>
           </div>
 
