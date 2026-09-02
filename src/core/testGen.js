@@ -13,8 +13,8 @@ Given a newly added or modified function in a pull request, write a complete, ru
 
 Format the output strictly as runnable test code with zero conversational chatter.`;
 
-export async function synthesizeTests(file, functionSnippet, testRunner = 'jest') {
-  const client = new PowerboxClient();
+export async function synthesizeTests(file, functionSnippet, testRunner = 'jest', options = {}) {
+  const client = new PowerboxClient(options);
   const prompt = `Generate comprehensive unit tests for this ${file} snippet using ${testRunner}:\n\n${functionSnippet}`;
 
   const response = await client.complete({

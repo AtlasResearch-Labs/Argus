@@ -39,7 +39,8 @@ async function testArgus() {
 
   // 3. Test Full Reviewer Pipeline
   console.log('3. Testing AI Reviewer with Powerbox Gateway...');
-  const reviewer = new ArgusReviewer();
+  const apiKey = process.env.POWERBOX_API_KEY || 'powerbox_master_sk_e430109c84d219ebf0be1eb1';
+  const reviewer = new ArgusReviewer({ apiKey });
   const result = await reviewer.reviewDiff(files);
   console.log(`   ✓ Verdict: ${result.grade}`);
   console.log(`   ✓ Summary: ${result.summary}`);
