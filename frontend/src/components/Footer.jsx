@@ -83,8 +83,10 @@ export default function Footer() {
 
           {/* Col 4: Legal */}
           <div className="space-y-3">
-            <div className="text-white font-mono font-bold text-xs uppercase tracking-wider">Policies</div>
+            <div className="text-white font-mono font-bold text-xs uppercase tracking-wider">Policies &amp; Contact</div>
             <ul className="space-y-2">
+              <li><a href="mailto:support@atlasresearchlabs.online" className="hover:text-white transition">Contact &amp; Support</a></li>
+              <li><a href="mailto:security@atlasresearchlabs.online" className="hover:text-white transition">Security Vulnerabilities</a></li>
               <li><a href="https://powerbox.atlasresearchlabs.online/privacy" className="hover:text-white transition">Privacy Policy</a></li>
               <li><a href="https://powerbox.atlasresearchlabs.online/terms" className="hover:text-white transition">Terms of Service</a></li>
               <li><span className="text-neutral-500">MIT License</span></li>
