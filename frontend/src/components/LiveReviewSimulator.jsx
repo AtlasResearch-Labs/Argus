@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, AlertTriangle, ShieldAlert, Sparkles, CheckCircle2, RefreshCw, FileCode, GitCommit, ArrowRight } from 'lucide-react';
+import { Check, AlertTriangle, Sparkles, CheckCircle2, FileCode, GitCommit, ArrowRight } from 'lucide-react';
 
 const SCENARIOS = [
   {
@@ -7,9 +7,9 @@ const SCENARIOS = [
     title: 'Null Pointer & Edge Case',
     file: 'src/auth/session.ts',
     line: 24,
-    badge: 'LOGIC BUG',
+    badge: 'LOGIC ERROR',
     severity: 'HIGH',
-    issue: 'Missing null check before accessing token payload properties causes unhandled rejection.',
+    issue: 'Missing null guard before accessing token payload properties causes unhandled promise rejection on empty headers.',
     originalCode: `export async function verifyUserSession(token: string | null) {
   // Vulnerable to null dereference if token is missing
   const payload = decodeToken(token);
@@ -34,16 +34,21 @@ const SCENARIOS = [
     const res = await verifyUserSession(null);
     expect(res.valid).toBe(false);
   });
+
+  it('correctly decodes valid active bearer tokens', async () => {
+    const res = await verifyUserSession('valid_jwt_sample_token');
+    expect(res.valid).toBe(true);
+  });
 });`
   },
   {
     id: 'security-leak',
-    title: 'Hardcoded Secret & Credential Leak',
+    title: 'Hardcoded Secret & Key Leak',
     file: 'src/services/s3.ts',
     line: 12,
     badge: 'SECURITY LEAK',
     severity: 'CRITICAL',
-    issue: 'Hardcoded AWS Access Key ID detected in client diff. Key must be moved to environment variables.',
+    issue: 'Hardcoded AWS Access Key ID detected in diff. Credential must be moved to environment variables immediately.',
     originalCode: `const s3Client = new S3Client({
   accessKeyId: "AKIAIOSFODNN7EXAMPLE",
   secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
@@ -61,8 +66,9 @@ const SCENARIOS = [
       { type: 'context', text: '});' }
     ],
     testsGenerated: `describe('S3 Configuration', () => {
-  it('reads credentials from environment variables', () => {
+  it('loads credentials from environment variables', () => {
     expect(process.env.AWS_ACCESS_KEY_ID).toBeDefined();
+    expect(process.env.AWS_SECRET_ACCESS_KEY).toBeDefined();
   });
 });`
   },
@@ -73,7 +79,7 @@ const SCENARIOS = [
     line: 18,
     badge: 'SECURITY VULN',
     severity: 'HIGH',
-    issue: 'Raw string concatenation in SQL query allows arbitrary parameter injection.',
+    issue: 'Raw string concatenation in SQL query allows arbitrary parameter injection. Parameterized binding required.',
     originalCode: `export async function findUser(id: string) {
   // Vulnerable to SQL injection
   return db.query("SELECT * FROM users WHERE id = '" + id + "'");
@@ -120,56 +126,53 @@ export default function LiveReviewSimulator() {
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
           <div className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-2">
-            // INTERACTIVE SENTINEL SIMULATOR
+            INTERACTIVE PR SENTINEL SIMULATOR
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-            See Argus Review a Live Pull Request
+            Context-Aware Pull Request Review
           </h2>
           <p className="text-neutral-400 text-xs sm:text-sm font-mono mt-2">
-            Select a scenario below to inspect how Argus identifies defects, generates committable suggestions, and synthesizes test suites.
+            Select a sample code diff below to inspect line-by-line review comments, committable code suggestions, and unit test generation.
           </p>
         </div>
 
         {/* Scenario Switcher Tabs */}
-        <div className="flex flex-wrap items-center gap-2 mb-6">
+        <div className="flex flex-wrap items-center gap-2 mb-6 font-mono text-xs">
           {SCENARIOS.map((sc, idx) => (
             <button
               key={sc.id}
               onClick={() => handleScenarioChange(idx)}
-              className={`px-4 py-2.5 rounded-xl font-mono text-xs transition border flex items-center gap-2 ${
+              className={`px-4 py-2.5 rounded-sm transition border flex items-center gap-2.5 ${
                 activeScenarioIndex === idx
                   ? 'bg-[#141414] border-neutral-300 text-white font-bold'
                   : 'bg-[#080808] border-[#1f1f1f] text-neutral-400 hover:text-white hover:border-[#333]'
               }`}
             >
-              <span className={`w-2 h-2 rounded-full ${sc.severity === 'CRITICAL' ? 'bg-red-500' : 'bg-neutral-300'}`} />
               <span>{sc.title}</span>
             </button>
           ))}
         </div>
 
         {/* GitHub Mock Review Card */}
-        <div className="rounded-2xl bg-[#050505] border border-[#1a1a1a] overflow-hidden shadow-2xl">
+        <div className="rounded-md bg-[#050505] border border-[#1a1a1a] overflow-hidden shadow-2xl">
           
           {/* PR Header Bar */}
           <div className="p-4 bg-[#0a0a0a] border-b border-[#171717] flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
             
             <div className="flex items-center gap-3">
-              <div className="px-2.5 py-1 rounded bg-[#171717] border border-[#262626] text-neutral-300 flex items-center gap-1.5">
+              <div className="px-2.5 py-1 rounded-sm bg-[#171717] border border-[#262626] text-neutral-300 flex items-center gap-1.5">
                 <FileCode className="w-3.5 h-3.5 text-neutral-400" />
                 <span>{scenario.file}</span>
               </div>
               <span className="text-neutral-500">Line {scenario.line}</span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                scenario.severity === 'CRITICAL' ? 'bg-red-950/80 text-red-300 border border-red-800/60' : 'bg-neutral-800 text-neutral-200 border border-neutral-700'
-              }`}>
+            <div className="flex items-center gap-4">
+              <span className="px-2 py-0.5 rounded-sm text-[10px] font-bold bg-[#141414] text-neutral-200 border border-neutral-700">
                 {scenario.badge}
               </span>
 
-              <div className="flex items-center gap-1 text-neutral-400">
+              <div className="flex items-center gap-1.5 text-neutral-400">
                 <span className="text-[11px]">Verdict:</span>
                 <span className="text-white font-bold">{appliedFix ? 'PASS' : 'CHANGES_REQUESTED'}</span>
               </div>
@@ -179,14 +182,14 @@ export default function LiveReviewSimulator() {
 
           {/* Sub-Tabs: Diff vs Unit Tests */}
           <div className="px-4 pt-3 border-b border-[#171717] flex items-center justify-between bg-[#080808]">
-            <div className="flex items-center gap-4 font-mono text-xs">
+            <div className="flex items-center gap-6 font-mono text-xs">
               <button
                 onClick={() => setActiveTab('diff')}
                 className={`pb-2.5 border-b-2 transition ${
                   activeTab === 'diff' ? 'border-white text-white font-bold' : 'border-transparent text-neutral-500 hover:text-neutral-300'
                 }`}
               >
-                Pull Request Diff & Review
+                Pull Request Diff & Comments
               </button>
 
               <button
@@ -195,13 +198,13 @@ export default function LiveReviewSimulator() {
                   activeTab === 'tests' ? 'border-white text-white font-bold' : 'border-transparent text-neutral-500 hover:text-neutral-300'
                 }`}
               >
-                <Sparkles className="w-3 h-3 text-neutral-300" />
+                <Sparkles className="w-3.5 h-3.5 text-neutral-300" />
                 <span>Synthesized Unit Tests</span>
               </button>
             </div>
 
             <div className="text-[11px] font-mono text-neutral-500 hidden sm:block">
-              Inference: Powerbox Flash · Cost: 500 Cells (~₹0.04)
+              Inference: Sub-second · Format: Committable Diff
             </div>
           </div>
 
@@ -211,23 +214,23 @@ export default function LiveReviewSimulator() {
               <div className="space-y-6">
                 
                 {/* Code Diff Box */}
-                <div className="rounded-xl bg-[#000000] border border-[#171717] overflow-hidden">
+                <div className="rounded-sm bg-[#000000] border border-[#171717] overflow-hidden">
                   <div className="px-4 py-2 bg-[#0d0d0d] border-b border-[#171717] text-neutral-400 flex items-center justify-between text-[11px]">
-                    <span>Original Diff</span>
-                    <span>{appliedFix ? 'Status: Resolved' : 'Status: Needs Fix'}</span>
+                    <span>Unified Git Diff</span>
+                    <span>{appliedFix ? 'Resolved' : 'Pending Review'}</span>
                   </div>
 
                   <div className="p-4 space-y-1 overflow-x-auto text-[13px] leading-relaxed">
                     {appliedFix ? (
                       <div>
-                        <div className="text-neutral-400">// Fixed state applied to branch</div>
+                        <div className="text-neutral-500">// Applied committable suggestion</div>
                         <pre className="text-neutral-200 mt-2">{scenario.suggestion}</pre>
                       </div>
                     ) : (
                       scenario.diffBefore.map((line, i) => (
                         <div 
                           key={i} 
-                          className={`py-0.5 px-2 rounded ${
+                          className={`py-0.5 px-2 rounded-sm ${
                             line.type === 'delete' 
                               ? 'bg-red-950/40 text-red-300 border-l-2 border-red-500' 
                               : line.type === 'add' 
@@ -243,21 +246,21 @@ export default function LiveReviewSimulator() {
                 </div>
 
                 {/* Argus Inline Review Comment Box (GitHub Native Style) */}
-                <div className="rounded-xl bg-[#0a0a0a] border border-[#222222] p-5 space-y-4">
+                <div className="rounded-sm bg-[#0a0a0a] border border-[#222222] p-5 space-y-4">
                   
                   {/* Bot Identity Header */}
                   <div className="flex items-center justify-between border-b border-[#1a1a1a] pb-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-6 h-6 rounded bg-black border border-[#333] p-1">
-                        <img src="/branding/powerbox-dark.png" alt="Argus" className="w-full h-full object-contain" />
+                      <div className="w-6 h-6 rounded-sm bg-black border border-[#333] p-1 flex items-center justify-center">
+                        <img src="/branding/argus-dark.png" alt="Argus" className="w-full h-full object-contain" />
                       </div>
                       <span className="font-bold text-white">argus-sentinel</span>
-                      <span className="px-1.5 py-0.2 text-[10px] rounded bg-[#1c1c1c] text-neutral-400">bot</span>
-                      <span className="text-neutral-500 text-[11px]">reviewed just now</span>
+                      <span className="px-1.5 py-0.2 text-[10px] rounded-sm bg-[#1c1c1c] text-neutral-400">bot</span>
+                      <span className="text-neutral-500 text-[11px]">reviewed 1m ago</span>
                     </div>
 
                     {appliedFix ? (
-                      <span className="flex items-center gap-1 text-white text-xs font-semibold">
+                      <span className="flex items-center gap-1.5 text-white text-xs font-semibold">
                         <CheckCircle2 className="w-4 h-4 text-white" />
                         <span>Suggestion Applied</span>
                       </span>
@@ -278,9 +281,9 @@ export default function LiveReviewSimulator() {
                   </div>
 
                   {/* 1-Click Suggestion Block */}
-                  <div className="rounded-lg bg-[#000000] border border-[#222] p-3 font-mono text-xs space-y-2">
+                  <div className="rounded-sm bg-[#000000] border border-[#222] p-3 font-mono text-xs space-y-2">
                     <div className="text-neutral-500 text-[11px]">Suggested Change (1-Click Commit):</div>
-                    <pre className="text-neutral-200 bg-[#080808] p-3 rounded border border-[#171717] overflow-x-auto text-[12px]">
+                    <pre className="text-neutral-200 bg-[#080808] p-3 rounded-sm border border-[#171717] overflow-x-auto text-[12px]">
                       {scenario.suggestion}
                     </pre>
 
@@ -288,7 +291,7 @@ export default function LiveReviewSimulator() {
                       {appliedFix ? (
                         <button 
                           disabled
-                          className="px-4 py-2 rounded-lg bg-[#141414] text-neutral-400 border border-[#262626] flex items-center gap-2"
+                          className="px-4 py-2 rounded-sm bg-[#141414] text-neutral-400 border border-[#262626] flex items-center gap-2"
                         >
                           <Check className="w-3.5 h-3.5 text-white" />
                           <span>Commit Applied</span>
@@ -296,7 +299,7 @@ export default function LiveReviewSimulator() {
                       ) : (
                         <button
                           onClick={handleApplyFix}
-                          className="px-4 py-2 rounded-lg bg-white text-black font-semibold hover:bg-neutral-200 transition flex items-center gap-2"
+                          className="px-4 py-2 rounded-sm bg-white text-black font-semibold hover:bg-neutral-200 transition flex items-center gap-2"
                         >
                           <GitCommit className="w-3.5 h-3.5" />
                           <span>Apply Suggestion</span>
@@ -310,10 +313,10 @@ export default function LiveReviewSimulator() {
               </div>
             ) : (
               /* Synthesized Unit Tests Tab */
-              <div className="rounded-xl bg-[#000000] border border-[#171717] p-5 space-y-4">
+              <div className="rounded-sm bg-[#000000] border border-[#171717] p-5 space-y-4">
                 <div className="flex items-center justify-between border-b border-[#1a1a1a] pb-3 text-[11px] text-neutral-400">
                   <span>Synthesized Jest / Vitest Suite</span>
-                  <span>Automated Boundary & Error Coverage</span>
+                  <span>Boundary & Error Path Coverage</span>
                 </div>
                 <pre className="text-neutral-200 overflow-x-auto text-[12px] leading-relaxed">
                   {scenario.testsGenerated}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -10,17 +11,17 @@ export default function Footer() {
           {/* Brand Col */}
           <div className="md:col-span-1 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded bg-[#0a0a0a] border border-[#262626] flex items-center justify-center p-1">
+              <div className="w-7 h-7 rounded-sm bg-[#0a0a0a] border border-[#222222] flex items-center justify-center p-1">
                 <img 
-                  src="/branding/powerbox-dark.png" 
+                  src="/branding/argus-dark.png" 
                   alt="Argus Logo" 
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="font-bold text-white tracking-wider">ARGUS</span>
+              <span className="font-bold text-white tracking-widest">ARGUS</span>
             </div>
             <p className="text-neutral-500 text-[11px] leading-relaxed font-sans">
-              All-seeing autonomous PR reviewer and code security sentry. Part of the Atlas Labs sovereign software collective.
+              Autonomous PR reviewer and code security sentinel. Part of the Atlas Labs sovereign software collective.
             </p>
           </div>
 
@@ -28,10 +29,30 @@ export default function Footer() {
           <div>
             <div className="text-white font-bold uppercase tracking-wider mb-3">// Ecosystem</div>
             <ul className="space-y-2 font-sans">
-              <li><a href="https://atlasresearchlabs.online" className="hover:text-white transition">Atlas Labs Main Portal ↗</a></li>
-              <li><a href="https://powerbox.atlasresearchlabs.online" className="hover:text-white transition">Powerbox Gateway ↗</a></li>
-              <li><a href="https://github.com/AtlasResearch-Labs/Isthmus" className="hover:text-white transition">Isthmus P2P Mesh ↗</a></li>
-              <li><a href="https://github.com/AtlasResearch-Labs/Atlas" className="hover:text-white transition">Atlas Workspace ↗</a></li>
+              <li>
+                <a href="https://atlasresearchlabs.online" className="hover:text-white transition inline-flex items-center gap-1">
+                  <span>Atlas Labs Portal</span>
+                  <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                </a>
+              </li>
+              <li>
+                <a href="https://powerbox.atlasresearchlabs.online" className="hover:text-white transition inline-flex items-center gap-1">
+                  <span>Powerbox Gateway</span>
+                  <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/AtlasResearch-Labs/Isthmus" className="hover:text-white transition inline-flex items-center gap-1">
+                  <span>Isthmus P2P Mesh</span>
+                  <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/AtlasResearch-Labs/Atlas" className="hover:text-white transition inline-flex items-center gap-1">
+                  <span>Atlas Workspace</span>
+                  <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -39,15 +60,30 @@ export default function Footer() {
           <div>
             <div className="text-white font-bold uppercase tracking-wider mb-3">// Resources</div>
             <ul className="space-y-2 font-sans">
-              <li><a href="https://github.com/AtlasResearch-Labs/Argus" className="hover:text-white transition">GitHub Repository ↗</a></li>
-              <li><a href="https://powerbox.atlasresearchlabs.online/docs" className="hover:text-white transition">Powerbox Inference Docs ↗</a></li>
-              <li><a href="https://powerbox.atlasresearchlabs.online/tester" className="hover:text-white transition">API Sandbox ↗</a></li>
+              <li>
+                <a href="https://github.com/AtlasResearch-Labs/Argus" className="hover:text-white transition inline-flex items-center gap-1">
+                  <span>GitHub Repository</span>
+                  <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                </a>
+              </li>
+              <li>
+                <a href="https://powerbox.atlasresearchlabs.online/docs" className="hover:text-white transition inline-flex items-center gap-1">
+                  <span>Inference API Docs</span>
+                  <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                </a>
+              </li>
+              <li>
+                <a href="https://powerbox.atlasresearchlabs.online/tester" className="hover:text-white transition inline-flex items-center gap-1">
+                  <span>API Sandbox</span>
+                  <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                </a>
+              </li>
             </ul>
           </div>
 
           {/* Governance */}
           <div>
-            <div className="text-white font-bold uppercase tracking-wider mb-3">// Legal & Security</div>
+            <div className="text-white font-bold uppercase tracking-wider mb-3">// Legal & Policy</div>
             <ul className="space-y-2 font-sans">
               <li><a href="https://powerbox.atlasresearchlabs.online/privacy" className="hover:text-white transition">Zero-Retention Privacy</a></li>
               <li><a href="https://powerbox.atlasresearchlabs.online/terms" className="hover:text-white transition">Terms of Service</a></li>
@@ -58,7 +94,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-neutral-500">
-          <div>© 2026 Atlas Labs. All rights reserved. Sovereign Software Primitives.</div>
+          <div>© 2026 Atlas Labs. Sovereign Software Primitives.</div>
           <div className="text-neutral-400">Sub-second Flash Inference · Zero Data Retention</div>
         </div>
 

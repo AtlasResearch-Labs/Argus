@@ -1,61 +1,61 @@
 import React, { useState } from 'react';
-import { Terminal, Copy, Check, Play } from 'lucide-react';
+import { Terminal, Copy, Check } from 'lucide-react';
 
 const CLI_EXAMPLES = [
   {
     id: 'review',
     cmd: 'argus review',
-    desc: 'Audit unstaged & staged changes locally before pushing',
-    output: `👁️  === ARGUS // AUTONOMOUS CODE SENTINEL ===
+    desc: 'Audit unstaged & staged changes locally before opening a pull request',
+    output: `ARGUS // AUTONOMOUS CODE SENTINEL
 
-📡 Inspecting git diff: [git diff HEAD]...
-📦 Found 2 modified code file(s). Running Argus analysis...
+Inspecting git diff: [git diff HEAD]...
+Parsed 2 modified code file(s). Running Argus analysis...
 
 --------------------------------------------------
-📊 Verdict: [CHANGES_REQUESTED] (Completed in 0.84s)
-📝 Summary: Potential null dereference in verifyToken and unindexed query detected.
+Verdict: [CHANGES_REQUESTED] (0.84s)
+Summary: Potential null dereference in verifyToken and unindexed query detected.
 
-🔍 ACTIONABLE CODE FINDINGS (2):
+ACTIONABLE FINDINGS (2):
 
-• [HIGH] src/auth/jwt.ts:24 — Unhandled Token Null State
-  Explanation: Function accesses token.length without checking if token is null.
+[HIGH] src/auth/jwt.ts:24 - Unhandled Token Null State
+  Explanation: Function accesses token.length without validating null input.
   Suggested Fix:
     if (!token) return { valid: false };
 
-• [MEDIUM] src/db/queries.ts:89 — Non-Parameterized Filter
-  Explanation: Ensure params are passed via array sanitization to prevent query injection.
+[MEDIUM] src/db/queries.ts:89 - Non-Parameterized Query Parameter
+  Explanation: Pass parameters via array binding to prevent injection risks.
 
 --------------------------------------------------`
   },
   {
     id: 'scan',
     cmd: 'argus scan',
-    desc: 'Run static zero-latency secret and credential sentry',
-    output: `👁️  === ARGUS // STATIC SECRET SENTRY ===
+    desc: 'Static zero-latency secret and credential sentry',
+    output: `ARGUS // STATIC SECRET SENTRY
 
-⚡ Scanning 14 source files across workspace...
+Scanning 14 source files across workspace...
 
-🚨 SECURITY FINDINGS (1):
+SECURITY FINDINGS (1):
   [CRITICAL] src/config/aws.ts:12 -> Leaked AWS Access Key ID
-    ↳ Line contains hardcoded AKIAIOSFODNN7EXAMPLE. Revoke key and move to .env.
+  Line contains hardcoded AKIAIOSFODNN7EXAMPLE. Move key to .env.
 
-⚠️  Please remove hardcoded credentials before creating a commit.`
+Warning: Please remove hardcoded credentials before creating a commit.`
   },
   {
     id: 'test',
     cmd: 'argus test src/math/calculator.ts',
     desc: 'Synthesize comprehensive unit test suite for a specific file',
-    output: `👁️  === ARGUS // TEST SYNTHESIZER ===
+    output: `ARGUS // TEST SYNTHESIZER
 
-🧪 Reading AST for src/math/calculator.ts...
-✨ Synthesizing Jest test suite with 16 boundary cases...
+Parsing AST for src/math/calculator.ts...
+Synthesizing Jest test suite with 16 boundary cases...
 
-✅ Generated: tests/math/calculator.test.ts (16 passing assertions)
-  ✓ applies 20% discount for VIP users
-  ✓ applies 10% discount for PRO users
-  ✓ returns 0 if price is negative or zero
-  ✓ handles null and undefined userRole safely
-  ✓ validates floating-point decimal precision`
+Generated: tests/math/calculator.test.ts (16 assertions)
+  - applies 20% discount for VIP users
+  - applies 10% discount for PRO users
+  - returns 0 if price is negative or zero
+  - handles null and undefined userRole safely
+  - validates floating-point decimal precision`
   }
 ];
 
@@ -78,23 +78,23 @@ export default function CliSection() {
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
           <div className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-2">
-            // LOCAL TERMINAL WORKFLOW
+            LOCAL TERMINAL WORKFLOW
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
             Audit Code Directly in Your Terminal
           </h2>
           <p className="text-neutral-400 text-xs sm:text-sm font-mono mt-2">
-            You don't have to wait for GitHub CI. Run Argus locally in seconds without any configuration.
+            Run Argus locally before pushing commits to catch issues before CI triggers.
           </p>
         </div>
 
         {/* Command Selector Tabs */}
-        <div className="flex flex-wrap items-center gap-2 mb-4">
+        <div className="flex flex-wrap items-center gap-2 mb-4 font-mono text-xs">
           {CLI_EXAMPLES.map((ex) => (
             <button
               key={ex.id}
               onClick={() => setActiveTab(ex.id)}
-              className={`px-4 py-2 rounded-xl font-mono text-xs transition border ${
+              className={`px-4 py-2 rounded-sm transition border ${
                 activeTab === ex.id
                   ? 'bg-[#141414] border-neutral-300 text-white font-bold'
                   : 'bg-[#080808] border-[#1f1f1f] text-neutral-400 hover:text-white hover:border-[#333]'
@@ -106,20 +106,20 @@ export default function CliSection() {
         </div>
 
         {/* Terminal Window */}
-        <div className="rounded-2xl bg-[#000000] border border-[#1a1a1a] overflow-hidden shadow-2xl font-mono">
+        <div className="rounded-sm bg-[#000000] border border-[#1a1a1a] overflow-hidden shadow-2xl font-mono">
           
           {/* Terminal Titlebar */}
           <div className="px-4 py-3 bg-[#0a0a0a] border-b border-[#171717] flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#262626]" />
-              <span className="w-3 h-3 rounded-full bg-[#262626]" />
-              <span className="w-3 h-3 rounded-full bg-[#262626]" />
-              <span className="ml-2 text-xs text-neutral-400">bash — argus cli</span>
+              <span className="w-2.5 h-2.5 rounded-none bg-[#262626]" />
+              <span className="w-2.5 h-2.5 rounded-none bg-[#262626]" />
+              <span className="w-2.5 h-2.5 rounded-none bg-[#262626]" />
+              <span className="ml-2 text-xs text-neutral-400">terminal — argus cli</span>
             </div>
 
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#141414] border border-[#222] hover:border-[#333] text-xs text-neutral-300 transition"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-[#141414] border border-[#222] hover:border-[#333] text-xs text-neutral-300 transition"
             >
               {copied ? <Check className="w-3 h-3 text-white" /> : <Copy className="w-3 h-3 text-neutral-400" />}
               <span>{copied ? 'Copied' : 'Copy command'}</span>
