@@ -1,0 +1,23 @@
+name: 'Argus Autonomous Code Guardian'
+description: 'High-density, zero-fluff autonomous PR code reviewer and security sentry powered by Atlas Powerbox.'
+author: 'Atlas Labs'
+branding:
+  icon: 'eye'
+  color: 'black'
+
+inputs:
+  github_token:
+    description: 'GitHub Token for posting PR comments'
+    required: true
+    default: ${{ github.token }}
+  powerbox_api_key:
+    description: 'Atlas Powerbox API Key'
+    required: false
+  model:
+    description: 'Model override (e.g. google/gemini-2.5-flash or deepseek/deepseek-chat)'
+    required: false
+    default: 'google/gemini-2.5-flash'
+
+runs:
+  using: 'node20'
+  main: 'src/index.js'

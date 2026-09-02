@@ -1,0 +1,24 @@
+{
+  "name": "@atlas-labs/argus",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Argus — The All-Seeing Autonomous Code Guardian & PR Reviewer for GitHub and GitLab",
+  "main": "src/index.js",
+  "bin": {
+    "argus": "./bin/argus.js"
+  },
+  "scripts": {
+    "test": "node test/run-test.js",
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "code-review",
+    "ai-agent",
+    "github-action",
+    "security-scanner",
+    "unit-test-generator",
+    "atlas-powerbox"
+  ],
+  "author": "Atlas Labs",
+  "license": "MIT"
+}
