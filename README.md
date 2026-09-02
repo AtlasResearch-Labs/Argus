@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run Argus Autonomous Code Reviewer
-        uses: Eren-Jaeger-DEV/argus@v1
+        uses: AtlasResearch-Labs/argus@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           POWERBOX_API_KEY: ${{ secrets.POWERBOX_API_KEY }}
