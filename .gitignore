@@ -1,11 +1,33 @@
-# Node modules & Logs
+# Dependencies and builds
 node_modules/
+dist/
+target/
+*.tgz
+*.zip
+
+# Runtime state files
+*.db
+*.db-shm
+*.db-wal
 *.log
+
+# AI planning, agent files, and progress notes — never commit these
+AGENTS.md
+PROGRESS.md
+agents.md
+progress.md
+*progress*.md
+*agent*.md
+*plan*.md
+*planning*.md
+*scratch*.md
+*.scratch.md
+*.plan.md
+temp*.md
+tmp*.md
+brain/
+.system_generated/
+
+# Environment files — never commit secrets
 .env
 .env.*
-
-# OS files
-.DS_Store
-Thumbs.db
-
-*.zip
