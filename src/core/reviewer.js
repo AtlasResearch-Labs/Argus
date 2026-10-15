@@ -49,6 +49,25 @@ export class ArgusReviewer {
     // 1. Instant static security scan
     const securityFindings = scanDiffForSecrets(parsedFiles);
 
+    // If no AI credentials provided, return static security scan results cleanly
+    if (!this.client.hasCredentials()) {
+      return {
+        summary: securityFindings.length > 0
+          ? `Static security sentry completed: ${securityFindings.length} issue(s) detected. Set POWERBOX_API_KEY or OPENAI_API_KEY for AI semantic review.`
+          : 'Static security sentry passed. Zero secret leaks or dangerous syntax patterns detected. (Set POWERBOX_API_KEY or OPENAI_API_KEY for AI review).',
+        grade: securityFindings.length > 0 ? 'CRITICAL_BLOCKED' : 'PASS',
+        comments: securityFindings.map(sec => ({
+          file: sec.file,
+          line: sec.line,
+          severity: sec.severity,
+          title: `🛡️ Security Alert: ${sec.title}`,
+          explanation: sec.details,
+          suggestion: null
+        })),
+        securityFindings
+      };
+    }
+
     // 2. Format diff for LLM
     const diffContext = parsedFiles.map(file => {
       return `--- File: ${file.newPath} ---\n${file.hunks.map(h => `${h.header}\n${h.lines.join('\n')}`).join('\n\n')}`;

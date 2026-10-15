@@ -46,17 +46,22 @@ jobs:
 
 ## 💻 Local Terminal CLI Usage
 
-You can also run Argus locally on your working branch before committing:
+Run Argus locally on your working branch before committing:
 
 ```bash
-# Audit current uncommitted changes
-npx @atlas-labs/argus review
+# Instant zero-install launch
+npx argusio scan                    # Fast offline secret & vulnerability scan
+npx argusio review                  # Deep review on uncommitted changes
+npx argusio review main             # Audit full PR diff against main branch
+npx argusio test src/auth/jwt.js    # Synthesize unit tests for a file
 
-# Audit diff against main branch
-npx @atlas-labs/argus review main
+# Or install globally for direct 'argus' command access anywhere
+npm install -g argusio
 
-# Fast static secret & vulnerability scan only
-npx @atlas-labs/argus scan
+# Run anywhere
+argus scan
+argus review
+argus test src/api/user.py pytest
 ```
 
 ---

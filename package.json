@@ -1,12 +1,20 @@
 {
-  "name": "@atlas-labs/argus",
-  "version": "1.0.0",
+  "name": "argusio",
+  "version": "1.0.1",
   "type": "module",
-  "description": "Argus — The All-Seeing Autonomous Code Guardian & PR Reviewer for GitHub and GitLab",
+  "description": "Argus — Autonomous Code Guardian, Security Sentry & PR Reviewer (CodeRabbit alternative)",
   "main": "src/index.js",
   "bin": {
-    "argus": "./bin/argus.js"
+    "argus": "bin/argus.js",
+    "argusio": "bin/argus.js"
   },
+  "files": [
+    "bin/",
+    "src/",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "node test/run-test.js",
     "start": "node src/index.js"
@@ -17,8 +25,18 @@
     "github-action",
     "security-scanner",
     "unit-test-generator",
-    "atlas-powerbox"
+    "atlas-powerbox",
+    "argus",
+    "coderabbit"
   ],
-  "author": "Atlas Labs",
-  "license": "MIT"
+  "author": "Atlas Research Labs <victor@atlasresearchlabs.online>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AtlasResearch-Labs/Argus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AtlasResearch-Labs/Argus/issues"
+  },
+  "homepage": "https://github.com/AtlasResearch-Labs/Argus#readme"
 }
