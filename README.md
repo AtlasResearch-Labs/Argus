@@ -1,9 +1,9 @@
-# 👁️ Argus — The All-Seeing Autonomous Code Guardian & PR Reviewer
+# ️ Argus — The All-Seeing Autonomous Code Guardian & PR Reviewer
 *Part of the Atlas Labs Sovereign Software Collective*
 
 ---
 
-## 🚀 Why Argus?
+## Why Argus?
 
 | Dimension | CodeRabbit ($15–$30/mo) | Argus (Atlas Labs) |
 |---|---|---|
@@ -15,7 +15,7 @@
 
 ---
 
-## ⚡ 1-Minute GitHub Action Integration
+## 1-Minute GitHub Action Integration
 
 Create `.github/workflows/argus.yml` in your repository:
 
@@ -23,37 +23,37 @@ Create `.github/workflows/argus.yml` in your repository:
 name: Argus PR Sentinel
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+ pull_request:
+ types: [opened, synchronize, reopened]
 
 permissions:
-  contents: read
-  pull-requests: write
+ contents: read
+ pull-requests: write
 
 jobs:
-  review:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run Argus Autonomous Code Reviewer
-        uses: AtlasResearch-Labs/argus@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          POWERBOX_API_KEY: ${{ secrets.POWERBOX_API_KEY }}
+ review:
+ runs-on: ubuntu-latest
+ steps:
+ - uses: actions/checkout@v4
+ - name: Run Argus Autonomous Code Reviewer
+ uses: AtlasResearch-Labs/argus@v1
+ env:
+ GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ POWERBOX_API_KEY: ${{ secrets.POWERBOX_API_KEY }}
 ```
 
 ---
 
-## 💻 Local Terminal CLI Usage
+## Local Terminal CLI Usage
 
 Run Argus locally on your working branch before committing:
 
 ```bash
 # Instant zero-install launch
-npx argusio scan                    # Fast offline secret & vulnerability scan
-npx argusio review                  # Deep review on uncommitted changes
-npx argusio review main             # Audit full PR diff against main branch
-npx argusio test src/auth/jwt.js    # Synthesize unit tests for a file
+npx argusio scan # Fast offline secret & vulnerability scan
+npx argusio review # Deep review on uncommitted changes
+npx argusio review main # Audit full PR diff against main branch
+npx argusio test src/auth/jwt.js # Synthesize unit tests for a file
 
 # Or install globally for direct 'argus' command access anywhere
 npm install -g argusio
@@ -66,23 +66,23 @@ argus test src/api/user.py pytest
 
 ---
 
-## 📁 Repository Architecture
+## Repository Architecture
 
 ```
 Argus/
-├── action.yml              # GitHub Action manifest
-├── package.json            # @atlas-labs/argus package definition
+├── action.yml # GitHub Action manifest
+├── package.json # @atlas-labs/argus package definition
 ├── bin/
-│   └── argus.js            # Standalone terminal CLI runner
+│ └── argus.js # Standalone terminal CLI runner
 └── src/
-    ├── core/
-    │   ├── parser.js       # Universal git diff & hunk line mapper
-    │   ├── security.js     # Zero-latency secret & vulnerability regex sentry
-    │   ├── powerboxClient.js # Low-latency Atlas Powerbox inference gateway
-    │   ├── reviewer.js     # High-density AI reviewer with 1-click suggestions
-    │   └── testGen.js      # Automated runnable unit test synthesizer
-    └── github/
-        └── action.js       # GitHub PR API reviewer & comment publisher
+ ├── core/
+ │ ├── parser.js # Universal git diff & hunk line mapper
+ │ ├── security.js # Zero-latency secret & vulnerability regex sentry
+ │ ├── powerboxClient.js # Low-latency Atlas Powerbox inference gateway
+ │ ├── reviewer.js # High-density AI reviewer with 1-click suggestions
+ │ └── testGen.js # Automated runnable unit test synthesizer
+ └── github/
+ └── action.js # GitHub PR API reviewer & comment publisher
 ```
 
 ---
